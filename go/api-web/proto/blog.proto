@@ -1,0 +1,100 @@
+syntax="proto3";
+import "google/protobuf/empty.proto";
+option go_package = "./;proto";
+
+service Blog {
+  //博客接口
+  rpc CreateBlog(CreateBlogInfo)returns(BlogInfoResponse);
+  rpc DeleteBlog(DeleteBlogInfo) returns (BlogInfoResponse);
+  rpc UpdateBlog(UpdateBlogsInfo) returns (BlogInfoResponse);
+  rpc GetBlogDetail(BlogInfoRequest) returns(BlogInfoResponses);
+
+  rpc GetBlogList(BlogFilterRequest) returns(BlogListResponse); //获取所有博客
+  //博客分类
+  rpc CreateCategory(CreateCategoryInfo)returns(CategoryInfoResponse);
+  rpc DeleteCategory(DeleteCategoryInfo) returns (CategoryInfoResponse);
+  rpc UpdateCategory(CreateCategoryInfo) returns (CategoryInfoResponse);
+  rpc GetCategoryDetail(CategoryInfoRequest) returns(CategoryInfoResponses);
+
+}
+
+message CreateBlogInfo{
+  string title=1;
+  string context=2;
+  int32 CategoryId=3;
+}
+
+message BlogInfoResponse{
+  bool susee=1;
+}
+
+message BlogInfoResponses{
+  int32 categoryid=1;
+  string content=2;
+  int32 id = 3;
+  string title=4;
+  string createTime=5;
+}
+
+message DeleteBlogInfo{
+  int32 id=1;
+}
+
+message UpdateBlogsInfo{
+  string title=1;
+  string context=2;
+ int32 CategoryId=3;
+  int32 id=4;
+}
+
+message  BlogInfoRequest{
+  int32 id=1;
+  }
+
+
+
+message BlogFilterRequest  {
+
+  int32 pages = 1;
+  int32 pagePerNums = 2;
+  string keyWords = 3;
+  int32 categoryid=4;
+  string content=5;
+  int32 id = 6;
+  string title=7;
+  string createTime=8;
+}
+
+
+message CreateCategoryInfo{
+  string name=1;
+  int32 id=2;
+}
+message CategoryInfoResponse{
+  bool susee=1;
+}
+
+message CategoryInfoResponses{
+
+  int32 total = 1;
+  repeated CateGoryFilterRequest data = 2;
+}
+message CateGoryFilterRequest{
+  string name=1;
+  int32 id=2;
+}
+
+message BlogListResponse{
+  int32 total = 1;
+  repeated BlogFilterRequest data = 2;
+}
+
+message DeleteCategoryInfo{
+  int32 id=1;
+}
+
+message CategoryInfoRequest{
+  int32 id=1;
+  string name=2;
+}
+
